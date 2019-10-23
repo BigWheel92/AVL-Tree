@@ -23,3 +23,9 @@ The following public meber functions are supported in the AVL class implementati
 -> int length() const  :  returns total number of nodes of the AVL tree (total number of nodes is equal to the total number of keys.)
 
 -> ~AVL()  :  Destructor
+
+
+The insert and deleteKey methods follow the same logic for balancing as stated on geeksforgeeks:
+
+Balancing logic for insert: https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+Balancing logic for delete: https://www.geeksforgeeks.org/avl-tree-set-2-deletion/
