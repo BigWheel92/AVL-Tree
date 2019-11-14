@@ -10,8 +10,8 @@ struct TNode
 {
 	k key;
 	v value;
-	TNode<k, v> *leftChild;
-	TNode<k, v> *rightChild;
+	TNode<k, v>* leftChild;
+	TNode<k, v>* rightChild;
 	int height;
 
 	TNode()
@@ -31,18 +31,21 @@ template <typename k, typename v>
 class AVL
 {
 private:
-	TNode<k, v> *root;
+	TNode<k, v>* root;
 
-	int getHeight(TNode<k, v> const*  root) const
+	int getHeight(TNode<k, v> const* root) const
 	{
-		if (root == nullptr || root->isLeafNode())
+		if (root == nullptr)
+			return -1;
+
+		if	(root->isLeafNode())
 			return 0;
 
 		return root->height;
 
 	}
 
-	void updateHeight(TNode<k,v> *root) const 
+	void updateHeight(TNode<k, v>* root) const
 	{
 		if (!root->isLeafNode())
 			root->height = 1 + max(getHeight(root->leftChild), getHeight(root->rightChild));
@@ -55,11 +58,11 @@ private:
 	{
 		if (node == nullptr)
 			return 0;
-		
+
 		else return (1 + length(node->leftChild) + length(node->rightChild));
 	}
 
-	void copy(TNode<k, v> *&n1, TNode<k, v> const * const&n2)
+	void copy(TNode<k, v>*& n1, TNode<k, v> const* const& n2)
 	{
 		if (n2 == nullptr)
 		{
@@ -80,15 +83,15 @@ private:
 
 	TNode<k, v>* doubleRightLeftRotation(TNode<k, v>* root)
 	{
-		TNode<k, v> *z = root;
-	
-		TNode<k, v> *y = z->rightChild;
+		TNode<k, v>* z = root;
+
+		TNode<k, v>* y = z->rightChild;
 
 
 		z->rightChild = this->singleRightRotation(y);
 
 		updateHeight(z);
-		
+
 		z = this->singleLeftRotation(z);
 
 
@@ -98,17 +101,17 @@ private:
 
 	TNode<k, v>* doubleLeftRightRotation(TNode<k, v>* root)
 	{
-		TNode<k, v> *z = root;
-		TNode<k, v>	*y = z->leftChild;
+		TNode<k, v>* z = root;
+		TNode<k, v>* y = z->leftChild;
 
 
-		 z->leftChild=this->singleLeftRotation(y);
+		z->leftChild = this->singleLeftRotation(y);
 
-		 updateHeight(z);
+		updateHeight(z);
 
-		 //z is now x
+		//z is now x
 		z = this->singleRightRotation(z);
-		
+
 		root = z;
 		return root;
 	}
@@ -136,12 +139,12 @@ private:
 	TNode<k, v>* singleLeftRotation(TNode<k, v>* root)
 	{
 
-		TNode<k, v> *z = root;
-		TNode<k, v> *y = z->rightChild;
+		TNode<k, v>* z = root;
+		TNode<k, v>* y = z->rightChild;
 
 
-		TNode<k, v>  *T2 = y->leftChild;
-		
+		TNode<k, v>* T2 = y->leftChild;
+
 
 
 		y->leftChild = z;
@@ -150,13 +153,13 @@ private:
 
 		updateHeight(z);
 		updateHeight(y);
-		
+
 		root = y;
 		return root;
 	}
 
 
-	int getBalanceFactor(TNode<k, v> const*root) const
+	int getBalanceFactor(TNode<k, v> const* root) const
 	{
 		if (!root || root->isLeafNode())
 			return 0;
@@ -165,7 +168,7 @@ private:
 	}
 
 
-	TNode<k, v>* insert(TNode<k, v> * root, k key, v value)
+	TNode<k, v>* insert(TNode<k, v>* root, k key, v value)
 	{
 		if (root == nullptr)
 		{
@@ -197,7 +200,7 @@ private:
 		updateHeight(root);
 
 		//left left case
-		if (getBalanceFactor(root)> 1 && key < root->leftChild->key)
+		if (getBalanceFactor(root) > 1 && key < root->leftChild->key)
 		{
 
 			root = this->singleRightRotation(root);
@@ -220,13 +223,13 @@ private:
 		{
 			root = this->doubleRightLeftRotation(root);
 		}
-		
+
 		return root;
 
 	}
 
 
-	void inorderPrintKeys(TNode<k, v> const*node) const
+	void inorderPrintKeys(TNode<k, v> const* node) const
 	{
 		if (node == nullptr)
 			return;
@@ -238,7 +241,7 @@ private:
 		inorderPrintKeys(node->rightChild);
 	}
 
-	v* search(TNode<k, v>  *n, k const key) const
+	v* search(TNode<k, v>* n, k const key) const
 	{
 		if (n == nullptr)
 			return nullptr;
@@ -253,7 +256,7 @@ private:
 
 	}
 
-	void deleteAll(TNode<k, v> *n)
+	void deleteAll(TNode<k, v>* n)
 	{
 		if (n == nullptr)
 			return;
@@ -264,7 +267,7 @@ private:
 	}
 
 
-	TNode<k,v>* deleteKey( TNode<k, v>* root, k const key)
+	TNode<k, v>* deleteKey(TNode<k, v>* root, k const key)
 	{
 		//the key to delete does not exist in the tree.
 		if (root == nullptr)
@@ -272,13 +275,13 @@ private:
 
 		else if (key > root->key)
 		{	//move to the right subtree
-			root->rightChild= deleteKey(root->rightChild, key);
-			
+			root->rightChild = deleteKey(root->rightChild, key);
+
 		}
 
 		else if (key < root->key)
 		{	//move to the left subtree
-			root->leftChild=deleteKey(root->leftChild, key);
+			root->leftChild = deleteKey(root->leftChild, key);
 		}
 
 		else //root node (the passed parameter) has the key that we need to delete
@@ -296,15 +299,15 @@ private:
 			{
 				if (root->leftChild == nullptr)
 				{
-					TNode<k, v> *nodeToDelete = root;
+					TNode<k, v>* nodeToDelete = root;
 					root = root->rightChild;
 					delete nodeToDelete;
-					
+
 				}
 
 				else //right child is nullptr, but left child is not
 				{
-					TNode<k, v> *nodeToDelete = root;
+					TNode<k, v>* nodeToDelete = root;
 					root = root->leftChild;
 					delete nodeToDelete;
 
@@ -314,8 +317,8 @@ private:
 
 			else  //case 3: none of the subtrees of node to delete is nullptr.
 			{
-				TNode<k, v> *newNodeToDelete = root->rightChild;
-				
+				TNode<k, v>* newNodeToDelete = root->rightChild;
+
 				while (newNodeToDelete->leftChild != nullptr)
 				{
 					newNodeToDelete = newNodeToDelete->leftChild;
@@ -325,7 +328,7 @@ private:
 				root->value = newNodeToDelete->value;
 
 				//in this new recursive call, case 0 and 3 will never exist. Only case 1 or case 2 will exist.
-				root->rightChild=deleteKey(root->rightChild, root->key);
+				root->rightChild = deleteKey(root->rightChild, root->key);
 			}//end of case 3.
 		}
 
@@ -333,37 +336,37 @@ private:
 		updateHeight(root);
 
 		//balance the root.
-		
+
 		//left left case
-		if (getBalanceFactor(root) > 1 && getBalanceFactor(root->leftChild)>1)
+		if (getBalanceFactor(root) > 1 && getBalanceFactor(root->leftChild) > 1)
 		{
 
 			root = this->singleRightRotation(root);
 		}
 
 		//right right case
-		else if (getBalanceFactor(root) < -1 &&  getBalanceFactor(root->rightChild)<-1)
+		else if (getBalanceFactor(root) < -1 && getBalanceFactor(root->rightChild) < -1)
 		{
 			root = this->singleLeftRotation(root);
 		}
 
 		//left right case
-		else if (getBalanceFactor(root) > 1 && getBalanceFactor(root->leftChild)<-1)
+		else if (getBalanceFactor(root) > 1 && getBalanceFactor(root->leftChild) < -1)
 		{
 			root = this->doubleLeftRightRotation(root);
 		}
 
 		//right left case
-		else if (getBalanceFactor(root) < -1 && getBalanceFactor(root->rightChild)>1)
+		else if (getBalanceFactor(root) < -1 && getBalanceFactor(root->rightChild) > 1)
 		{
 			root = this->doubleRightLeftRotation(root);
 		}
 
-			return root;
+		return root;
 	}
 
 
-	
+
 public:
 	AVL()
 	{
@@ -392,11 +395,11 @@ public:
 
 	void insert(k const  key, v const value)
 	{
-	
-		root=insert(this->root, key, value);
+
+		root = insert(this->root, key, value);
 	}
 
-	
+
 	v* search(k const key) const
 	{
 		return search(this->root, key);
@@ -404,7 +407,7 @@ public:
 
 	void inorderPrintKeys() const
 	{
-		
+
 		this->inorderPrintKeys(this->root);
 	}
 
@@ -416,7 +419,7 @@ public:
 
 	void deleteKey(k const key)
 	{
-		this->root=deleteKey(this->root, key);
+		this->root = deleteKey(this->root, key);
 	}
 
 	int length() const
@@ -430,6 +433,4 @@ public:
 	}
 
 
-
 };
-
