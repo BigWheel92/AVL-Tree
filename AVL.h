@@ -52,8 +52,6 @@ private:
 		else root->height = 0;
 	}
 
-
-
 	int length(TNode<k, v> const* node) const
 	{
 		if (node == nullptr)
@@ -84,17 +82,11 @@ private:
 	TNode<k, v>* doubleRightLeftRotation(TNode<k, v>* root)
 	{
 		TNode<k, v>* z = root;
-
 		TNode<k, v>* y = z->rightChild;
 
-
 		z->rightChild = this->singleRightRotation(y);
-
 		updateHeight(z);
-
 		z = this->singleLeftRotation(z);
-
-
 		root = z;
 		return root;
 	}
@@ -144,8 +136,6 @@ private:
 
 
 		TNode<k, v>* T2 = y->leftChild;
-
-
 
 		y->leftChild = z;
 		z->rightChild = T2;
@@ -228,7 +218,6 @@ private:
 
 	}
 
-
 	void inorderPrintKeys(TNode<k, v> const* node) const
 	{
 		if (node == nullptr)
@@ -253,7 +242,6 @@ private:
 			return search(n->leftChild, key);
 
 		else return search(n->rightChild, key);
-
 	}
 
 	void deleteAll(TNode<k, v>* n)
@@ -365,8 +353,6 @@ private:
 		return root;
 	}
 
-
-
 public:
 	AVL()
 	{
@@ -385,7 +371,6 @@ public:
 		copy(this->root, that.root);
 	}
 
-
 	int getHeight() const
 	{
 		if (root)
@@ -398,7 +383,6 @@ public:
 
 		root = insert(this->root, key, value);
 	}
-
 
 	v* search(k const key) const
 	{
@@ -431,6 +415,4 @@ public:
 	{
 		deleteAll();
 	}
-
-
 };
