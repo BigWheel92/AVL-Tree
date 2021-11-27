@@ -338,26 +338,26 @@ private:
 		//balance the root.
 
 		//left left case
-		if (getBalanceFactor(root) > 1 && getBalanceFactor(root->leftChild) > 1)
+		if (getBalanceFactor(root) > 1 && getBalanceFactor(root->leftChild) >=0)
 		{
 
 			root = this->singleRightRotation(root);
 		}
 
 		//right right case
-		else if (getBalanceFactor(root) < -1 && getBalanceFactor(root->rightChild) < -1)
+		else if (getBalanceFactor(root) < -1 && getBalanceFactor(root->rightChild) <=0)
 		{
 			root = this->singleLeftRotation(root);
 		}
 
 		//left right case
-		else if (getBalanceFactor(root) > 1 && getBalanceFactor(root->leftChild) < -1)
+		else if (getBalanceFactor(root) > 1 && getBalanceFactor(root->leftChild) < 0)
 		{
 			root = this->doubleLeftRightRotation(root);
 		}
 
 		//right left case
-		else if (getBalanceFactor(root) < -1 && getBalanceFactor(root->rightChild) > 1)
+		else if (getBalanceFactor(root) < -1 && getBalanceFactor(root->rightChild) > 0)
 		{
 			root = this->doubleRightLeftRotation(root);
 		}
